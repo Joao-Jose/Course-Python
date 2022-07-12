@@ -1,29 +1,25 @@
-cpf = input('Informe o seu CPF, por favor. ')
+from random import randint
+numero = str(randint(100000000, 999999999))
 
-x = 1
-novocpf = ''
-soma, digito, multiplicador = 0, 0, 10
+novo_cpf = numero
+reverso = 10
+total = 0
 
-for sonumeros in cpf[:-2]:
-    if sonumeros.isdecimal():
-        novocpf = novocpf + sonumeros
+# Loop do CPF
+for index in range(19):
+    if index > 8:
+        index -= 9
 
-while x <= 2:
-    for numero in novocpf:
-        soma = soma + int(numero) * multiplicador
-        multiplicador -= 1
+    total += int(novo_cpf[index]) * reverso
 
-    digito = 11 - (soma % 11)
-    multiplicador = 11
+    reverso -= 1
+    if reverso < 2:
+        reverso = 11
+        d = 11 - (total % 11)
 
-    if digito > 9:
-        novocpf = novocpf + '0'
-    else:
-        novocpf = novocpf + str(digito)
-    digito, soma = 0, 0
-    x += 1
+        if d > 9:
+            d = 0
+        total = 0
+        novo_cpf += str(d)
 
-if cpf[-2:] == novocpf[-2:]:
-    print('CPF válido.')
-else:
-    print('Verifique o número digitado. CPF Inválido')
+print(novo_cpf)
